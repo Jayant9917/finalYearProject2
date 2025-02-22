@@ -7,7 +7,7 @@ const DBConnection = async () => {
     // const USERNAME = process.env.DB_USERNAME;
     // const PASSWORD = process.env.DB_PASSWORD;
 
-    const MONGO_URI = `mongodb+srv://ranajayant527:Tkpe1aNdPtFGfGQo@cluster0.lxvpy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+    const MONGO_URI = `mongodb+srv://gaurajay1011:Fd8UWauCu6qtf2jD@cluster0.80cvj.mongodb.net/`;
     try {
         await mongoose.connect(MONGO_URI);
         console.log('Database connected successfully');
