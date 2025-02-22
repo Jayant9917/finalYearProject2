@@ -16,7 +16,7 @@ export const uploadImage = async (request, response) => {
         });
         
         response.status(200).json({ 
-            path: `mongodb+srv://gaurajay1011:Fd8UWauCu6qtf2jD@cluster0.80cvj.mongodb.net/download/${file._id}`,
+            path: `mongodb+srv://gaurajay1011:Fd8UWauCu6qtf2jD@cluster0.80cvj.mongodb.net/upload/${file._id}`,
             filename: file.name
         });
         
