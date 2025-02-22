@@ -1,15 +1,20 @@
+//mongodb+srv://gaurajay1011:Fd8UWauCu6qtf2jD@cluster0.80cvj.mongodb.net/
+import path from 'path';
 
-
-
- export const uploadImage = async (request, response) => {
+export const uploadImage = async (request, response) => {
     const fileObj = {
         path: request.file.path,
         name: request.file.originalname,
     }
     
     try {
-        const file = await File.create(fileObj);
-        // Return a direct download URL
+        // Convert to absolute path if it's not already
+        const absolutePath = path.resolve(fileObj.path);
+        const file = await File.create({
+            ...fileObj,
+            path: absolutePath
+        });
+        
         response.status(200).json({ 
             path: `mongodb+srv://gaurajay1011:Fd8UWauCu6qtf2jD@cluster0.80cvj.mongodb.net/download/${file._id}`,
             filename: file.name
@@ -32,11 +37,19 @@ export const getImage = async (request, response) => {
         file.downloadCount++;
         await file.save();
 
-        // Set headers to force download
-        response.setHeader('Content-Disposition', `attachment; filename="${file.name}"`);
-        response.setHeader('Content-Type', 'application/octet-stream');
+        // Use sendFile instead of download for more reliable file serving
+        response.sendFile(file.path, { 
+            headers: {
+                'Content-Type': 'application/octet-stream',
+                'Content-Disposition': `attachment; filename="${file.name}"`
+            }
+        }, (err) => {
+            if (err) {
+                console.error('Error sending file:', err);
+                response.status(500).send('Error downloading file');
+            }
+        });
 
-        response.download(file.path, file.name);
     } catch (error) {
         console.error(error.message);
         response.status(500).json({ msg: error.message });
