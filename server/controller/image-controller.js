@@ -12,7 +12,7 @@ export const uploadImage = async (request, response) => {
     
     try {
         const file = await File.create(fileObj);
-        response.status(200).json({ path: `mongodb+srv://gaurajay1011:Fd8UWauCu6qtf2jD@cluster0.80cvj.mongodb.net/${file._id}`});
+        response.status(200).json({ path: `mongodb+srv://gaurajay1011:Fd8UWauCu6qtf2jD@cluster0.80cvj.mongodb.net/file/${file._id}`});
         
     } catch (error) {
         console.error(error.message);
