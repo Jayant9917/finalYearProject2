@@ -18,7 +18,7 @@ function App() {
         formData.append("name", file.name);
         formData.append("file", file);
 
-        const response = await fetch('https://finalyearproject2-dk66.onrender.com/upload', {
+        const response = await fetch('http://localhost:8000/upload', {
           method: 'POST',
           body: formData
         });
